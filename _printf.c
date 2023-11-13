@@ -1,5 +1,11 @@
 #include "main.h"
-#include <stdarg.h>
+
+/**
+ * _printf - prints constant char
+ * @format: first named argument
+ *
+ * Return: 0
+ */
 
 int _printf(const char *format, ...)
 {
