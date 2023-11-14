@@ -56,6 +56,16 @@ int _printf(const char *format, ...)
 				write (1, np, str_len);
 				ch += str_len;
 			}
+			else if (*format == 'd')
+			{
+				write(1, format, 1);
+				ch++;
+			}
+			else if (*format == 'i')
+			{
+				write(1, format, 1);
+				ch++;
+			}
 		}
 
 		format++;
