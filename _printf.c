@@ -1,24 +1,15 @@
 #include "main.h"
 
 /**
- * _printf - primts output
- * @format: first arg
+ * _printf - prints constant char
+ * @format: first named argument
  *
  * Return: 0
  */
 
-int _printf(const char *format,...)
+int _printf(const char *format, ...)
 {
-	int pc;
-
-	conver_t func_list[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"%", print_percent},
-		{"d", print_int},
-		{"i", print_int},
-		{NULL, NULL}
-	};
+	int ch = 0;
 
 	va_list ls;
 
@@ -27,9 +18,49 @@ int _printf(const char *format,...)
 
 	va_start(ls, format);
 
-	pc = parser(format, func_list, ls);
+	while (*format)
+	{
+		if (*format != '%')
+		{
+			write (1, format, 1);
+			ch++;
+		}
+		else
+		{
+			format++;
+			
+			if (*format == '\0')
+			{
+				break;
+			}
 
+			if (*format == '%')
+			{
+				write (1, format, 1);
+				ch++;
+			}
+			else if (*format == 'c')
+			{
+				char q = va_arg(ls, int);
+				write (1, &q, 1);
+				ch++;
+			}
+			else if (*format == 's')
+			{
+				char *np = va_arg(ls, char*);
+				int str_len = 0;
+
+				while (np[str_len] != '\0')
+					str_len++;
+
+				write (1, np, str_len);
+				ch += str_len;
+			}
+		}
+
+		format++;
+	}
 	va_end(ls);
 
-	return (pc);
+	return (ch);
 }
